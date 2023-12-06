@@ -4,13 +4,13 @@ sidebar:
   order: 0
 ---
 
-# Installation
+## Installation
 
 ```bash
 npm install astro-live-code
 ```
 
-# Config
+## Config
 
 Add the following to your `astro.config.mjs` file:
 
@@ -26,7 +26,7 @@ export default defineConfig({
 })
 ```
 
-# Usage
+## Usage
 
 Add `live` to the end of your code block. If the language is renderable by your
 Astro project (e.g. `jsx`, `svelte`, `vue`, etc.) it will be rendered as an

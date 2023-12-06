@@ -104,28 +104,6 @@ export default function examples(options) {
             name: 'filename',
             value: mdFilename,
           },
-          {
-            type: 'mdxJsxAttribute',
-            name: 'ExampleComponent',
-            value: {
-              type: 'mdxJsxAttributeValueExpression',
-              data: {
-                estree: {
-                  type: 'Program',
-                  body: [
-                    {
-                      type: 'ExpressionStatement',
-                      expression: {
-                        type: 'Identifier',
-                        name: exampleComponentName,
-                      },
-                    },
-                  ],
-                  sourceType: 'module',
-                },
-              },
-            },
-          },
         ]
 
         const componentPropAttributes = [
@@ -403,7 +381,8 @@ function getLayoutPathFromMeta(meta) {
   const part = meta.split(' ').find((part) => part.startsWith('layout='))
 
   if (part) {
-    return part.split('=')[1]
+    const layoutPath = part.split('=')[1]
+    return layoutPath.slice(1, layoutPath.length - 1)
   }
 }
 
@@ -411,7 +390,8 @@ function getWrapperPathFromMeta(meta) {
   const part = meta.split(' ').find((part) => part.startsWith('wrapper='))
 
   if (part) {
-    return part.split('=')[1]
+    const wrapperPath = part.split('=')[1]
+    return wrapperPath.slice(1, wrapperPath.length - 1)
   }
 }
 

@@ -4,9 +4,9 @@ import { virtualFiles } from './virtual-files'
 /**
  * @returns {import('vite').Plugin}
  */
-export default function liveExamplesVitePlugin() {
+export default function liveCodeVitePlugin() {
   return {
-    name: 'live-examples',
+    name: 'vite-live-code',
     resolveId(id) {
       if (virtualFiles.has(id)) {
         return id

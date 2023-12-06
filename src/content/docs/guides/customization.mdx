@@ -1,0 +1,90 @@
+---
+title: Customization
+sidebar:
+  order: 4
+---
+import LiveCodeLayoutSrc from 'astro-live-code/components/LiveCodeLayout.astro?raw'
+import {Code} from 'astro:components'
+
+## Layouts
+
+Live code is rendered in an Astro component. By default it uses `astro-live-code/components/LiveCodeLayout.astro`:
+
+<Code code={LiveCodeLayoutSrc} lang="astro" />
+
+You can customize this by creating your own Astro layout and providing it in the integration config:
+
+```js title="astro.config.mjs"
+export default defineConfig({
+  integrations: [
+    liveCode({
+      layout: './src/MyLayout.astro',
+    }),
+  ],
+})
+```
+
+### Layouts per code block
+
+Layouts can be specified for a specific code block by adding a `layout` attribute to the code block:
+
+````md
+```jsx layout="./path/to/Layout.astro"
+```
+````
+
+### Props
+
+Layouts will receive the following props:
+
+```ts
+interface Props {  
+  // The language of the code block
+  lang: string
+  // The filename of the mdx file
+  filename: string
+  // The props being passed to the component from props={{ ... }}
+  componentProps: Record<string, unknown>  
+}
+```
+
+It will also receive `example` and `code` slots, where the rendered component and code block will be passed respectively.
+
+## Wrappers
+
+Wrappers are similar to layouts, but they are components of any language that will wrap the component being rendered. 
+This is useful if you need to wrap the code component in something like a `ThemeProvider`:
+
+```jsx live wrapper="./_JSXWrapper.jsx"
+import { useTheme } from './_ThemeProvider'
+
+export default () => {
+  const theme = useTheme()
+  return (
+    <p>The theme is "{theme}"</p>
+  )
+}
+```
+
+```js title="astro.config.mjs"
+export default defineConfig({
+  integrations: [
+    liveCode({
+      wrapper: './src/MyWrapper.jsx',
+    }),
+  ],
+})
+```
+
+### Wrappers per code block
+
+Like layouts, these can also be specified per code block:
+
+````md
+```jsx wrapper="./path/to/Wrapper.jsx"
+```
+````
+
+### Props
+
+Wrappers will receive all props that the code component receives from `props={{ ... }}`.
