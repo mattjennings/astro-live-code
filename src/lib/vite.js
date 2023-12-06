@@ -1,5 +1,5 @@
 import MagicString from 'magic-string'
-import { virtualFiles } from './virtual-files'
+import { virtualFiles } from './virtual-files.js'
 
 /**
  * @returns {import('vite').Plugin}
