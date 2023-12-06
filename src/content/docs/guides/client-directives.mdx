@@ -1,0 +1,24 @@
+---
+title: Client Directives
+---
+
+You are able to pass `client:*` props.
+
+````md
+```jsx live props={{ "client:load": true }}
+// code
+```
+````
+
+```jsx live props={{ "client:load": true }}
+import { useState } from 'preact/hooks'
+
+export default () => {
+  const [count, setCount] = useState(0)
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      {count}
+    </button>
+  )
+}
+```

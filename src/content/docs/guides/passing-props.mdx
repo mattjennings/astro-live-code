@@ -1,0 +1,40 @@
+---
+title: Passing Props
+sidebar:
+  order: 2
+---
+
+Props can be passed to the live code block using the `props` attribute. This attribute accepts a JSON object of props to pass to the live code block.
+
+````md
+```jsx live props={{ children: 'hello world' }}
+// code
+```
+````
+
+```jsx live props={{ children: 'hello world' }}
+export default ({ children }) => {
+  return <button>{children}</button>
+}
+```
+
+
+## Default Props
+
+If you have a common set of props you'd like applied to all examples, you can configure
+it using `defaultProps` in the integration config:
+
+```js title="astro.config.mjs"
+export default defineConfig({
+  integrations: [
+    liveCode({
+      defaultProps: {
+        theme: 'dark',
+
+        // apply client directives to all components (see next page)
+        'client:load': true
+      },
+    }),
+  ],
+})
+```

@@ -2,6 +2,14 @@
   "name": "astro-live-code",
   "type": "module",
   "version": "0.0.1",
+  "files": [
+    "src/lib"
+  ],
+  "exports": {
+    ".": "./src/lib/index.js",
+    "./components": "./src/lib/components/index.js",
+    "./components/LiveCodeLayout.astro": "./src/lib/components/LiveCodeLayout.astro"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -10,8 +18,20 @@
     "astro": "astro"
   },
   "dependencies": {
+    "estree-util-visit": "^2.0.0",
+    "magic-string": "^0.30.5",
+    "unist-util-visit-parents": "^6.0.1"
+  },
+  "devDependencies": {
+    "@astrojs/preact": "^3.0.1",
+    "@astrojs/svelte": "^5.0.0",
+    "@astrojs/vue": "^4.0.2",
+    "svelte": "^4.2.8",
     "@astrojs/starlight": "^0.15.0",
     "astro": "^4.0.1",
+    "prettier": "^3.1.0",
+    "preact": "^10.6.5",
+    "vue": "^3.2.30",
     "sharp": "^0.32.5"
   }
 }
