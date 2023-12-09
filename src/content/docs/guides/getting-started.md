@@ -38,4 +38,4 @@ imported component.
 ```
 ````
 
-See [the next page](/guides/getting-started/usage) for more examples.
+See [the next page](/guides/basic-usage) for more examples.
