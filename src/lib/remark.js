@@ -14,8 +14,6 @@ export default function examples(options) {
   return function transformer(tree, file) {
     let examples = []
 
-    ensureImport(tree, { from: 'astro:components', name: 'Code' })
-
     unistVisit(tree, 'code', (node, parents) => {
       const parent = parents[parents.length - 1]
       const childIndex = parent.children.indexOf(node)
