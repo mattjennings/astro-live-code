@@ -27,7 +27,7 @@ export default function examples(options) {
         const i = examples.length
 
         const parentId = toPOSIX(
-          file.history[0].split(process.cwd())[1].slice(1),
+          file.history[0].split(toPOSIX(process.cwd()))[1].slice(1),
         )
         const mdFilename = toPOSIX(
           path.basename(parentId, path.extname(parentId)),
