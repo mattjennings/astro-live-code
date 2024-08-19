@@ -55,14 +55,24 @@ It will also receive `example` and `code` slots, where the rendered component an
 Wrappers are similar to layouts, but they are components of any language that will wrap the component being rendered. 
 This is useful if you need to wrap the code component in something like a `ThemeProvider`:
 
-```jsx live wrapper="./_JSXWrapper.jsx"
-import { useTheme } from './_ThemeProvider'
+```jsx title="ThemeProvider.jsx"
+import { createContext } from 'preact'
+import { useContext } from 'preact/hooks'
 
-export default () => {
-  const theme = useTheme()
-  return (
-    <p>The theme is "{theme}"</p>
-  )
+export const ThemeContext = createContext('light')
+
+export default function ThemeProvider({ children }) {
+  return <ThemeContext.Provider value="dark">{children}</ThemeContext.Provider>
+}
+
+export const useTheme = () => useContext(ThemeContext)
+```
+
+```jsx title="MyWrapper.jsx"
+import ThemeProvider from './ThemeProvider'
+
+export default function MyWrapper({ children }) {
+  return <ThemeProvider>{children}</ThemeProvider>
 }
 ```
 
@@ -74,6 +84,19 @@ export default defineConfig({
     }),
   ],
 })
+```
+
+Now code blocks will be rendered as children of `MyWrapper`
+
+```jsx live wrapper="./JSXWrapper.jsx"
+import { useTheme } from './ThemeProvider'
+
+export default () => {
+  const theme = useTheme()
+  return (
+    <p>The theme is "{theme}"</p>
+  )
+}
 ```
 
 ### Wrappers per code block
