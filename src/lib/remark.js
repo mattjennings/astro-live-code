@@ -412,6 +412,7 @@ function createWrapperSrc({ lang, inner, outer }) {
     <Inner {...$$restProps}/>
 </Outer>`
     case 'jsx':
+    case 'tsx':
       return `\
 import Inner from ${JSON.stringify(inner)}
 import Outer from ${JSON.stringify(outer)}
