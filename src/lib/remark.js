@@ -438,5 +438,9 @@ export default {
         return <Outer {...this.$props}><Inner /></Outer>
     }    
 }`
+    default:
+      throw new Error(
+        `Language "${lang}" is not supported for use with wrappers. If you'd like to see it supported please open an issue https://github.com/mattjennings/astro-live-code/issues`,
+      )
   }
 }
