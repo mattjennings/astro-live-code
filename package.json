@@ -10,6 +10,8 @@
   "files": [
     "src/lib"
   ],
+  "main": "./src/lib/index.js",
+  "types": "./src/lib/index.d.ts",
   "exports": {
     ".": "./src/lib/index.js",
     "./components": "./src/lib/components/index.js",
