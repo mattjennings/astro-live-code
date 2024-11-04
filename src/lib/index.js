@@ -2,19 +2,9 @@ import remark from './remark.js'
 import vite from './vite.js'
 
 /**
- * @typedef {{
- * layout?: string
- * wrapper?: string
- * defaultProps?: Record<string, any>
- * }} LiveCodeOptions
+ * @type {import('./index.js').default}
  */
-
-/**
- *
- * @param {LiveCodeOptions} options
- * @returns {import('astro').AstroIntegration}
- */
-export default function (options = {}) {
+export default function liveCode(options = {}) {
   Object.assign(
     options,
     {

@@ -11,7 +11,11 @@
     "src/lib"
   ],
   "exports": {
-    ".": "./src/lib/index.js",
+    ".": {
+      "types": "./src/lib/index.d.ts",
+      "import": "./src/lib/index.js",
+      "default": "./src/lib/index.js"
+    },
     "./components": "./src/lib/components/index.js",
     "./components/LiveCodeLayout.astro": "./src/lib/components/LiveCodeLayout.astro"
   },

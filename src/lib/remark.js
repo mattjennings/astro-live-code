@@ -6,7 +6,6 @@ import path from 'path'
 export const EXAMPLE_COMPONENT_PREFIX = 'AstroExample_'
 
 /**
- *
  * @param {import('./index.js').LiveCodeOptions} options
  * @returns
  */
