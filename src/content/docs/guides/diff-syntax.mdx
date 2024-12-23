@@ -1,0 +1,28 @@
+---
+title: Diff Syntax
+sidebar:
+  order: 4
+---
+
+Diff syntax is supported when used with Expressive Code. [See their docs on using diff syntax](https://expressive-code.com/key-features/text-markers/#combining-syntax-highlighting-with-diff-like-syntax).
+(If you are using Starlight, Expressive Code is already included.)
+
+Lines that begin with `-` are removed from the rendered code.
+
+````
+```diff live lang="html"
+<div>
+-  <button>hello world</button>
++  <button>hello new world</button>
+</div>
+```
+````
+
+becomes
+
+```diff live lang="html"
+<div>
+- <button>hello world</button>
++ <button>hello new world</button>
+</div>
+```

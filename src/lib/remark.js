@@ -18,9 +18,20 @@ export default function examples(options) {
       const childIndex = parent.children.indexOf(node)
 
       if (node.meta && node.meta.split(' ').includes('live')) {
+        const isDiff = node.lang === 'diff'
+        const lang = getLang(node)
         const meta = node.meta
 
-        const src = node.value
+        const src = isDiff
+          ? node.value
+              ?.split('\n')
+              // filter out lines with leading -
+              .filter((line) => !line.match(/^[-]/))
+              // remove leading + from lines
+              .map((line) => line.replace(/^[+]/, ''))
+              .join('\n')
+          : node.value
+
         const i = examples.length
 
         const parentId = toPOSIX(
@@ -35,7 +46,7 @@ export default function examples(options) {
           `${parentId.replace(
             path.extname(parentId),
             '',
-          )}-${exampleComponentName}.${node.lang}`,
+          )}-${exampleComponentName}.${lang}`,
         )
 
         const layout = toPOSIX(getLayoutPathFromMeta(meta) || options.layout)
@@ -43,7 +54,7 @@ export default function examples(options) {
 
         const wrapper = toPOSIX(getWrapperPathFromMeta(meta) || options.wrapper)
         const wrapperFilename = wrapper
-          ? filename.replace(`.${node.lang}`, `.w.${node.lang}`)
+          ? filename.replace(`.${lang}`, `.w.${lang}`)
           : null
 
         examples.push({ filename, src })
@@ -56,7 +67,7 @@ export default function examples(options) {
         if (wrapper) {
           virtualFiles.set(wrapperFilename, {
             src: createWrapperSrc({
-              lang: node.lang,
+              lang,
               inner: filename,
               outer: wrapper,
             }),
@@ -93,7 +104,7 @@ export default function examples(options) {
           {
             type: 'mdxJsxAttribute',
             name: 'lang',
-            value: node.lang,
+            value: lang,
           },
           // filename of the markdown file
           {
@@ -348,6 +359,17 @@ function valueToEstreeExpression(value) {
         }
       }
   }
+}
+
+function getLang(node) {
+  if (node.lang === 'diff') {
+    const lang = node.meta.split(' ').find((part) => part.startsWith('lang='))
+    if (lang) {
+      return lang.split('=')[1].slice(1, -1)
+    }
+  }
+
+  return node.lang
 }
 
 function parsePropsFromString(string) {
