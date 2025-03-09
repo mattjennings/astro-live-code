@@ -32,15 +32,17 @@
     "unist-util-visit-parents": "^6.0.1"
   },
   "devDependencies": {
-    "@astrojs/preact": "^3.0.1",
-    "@astrojs/svelte": "^5.0.0",
-    "@astrojs/vue": "^4.0.2",
-    "svelte": "^4.2.8",
-    "@astrojs/starlight": "^0.15.0",
-    "astro": "^4.0.1",
+    "@astrojs/preact": "^4.0.1",
+    "@astrojs/solid-js": "^5.0.5",
+    "@astrojs/starlight": "^0.32.2",
+    "@astrojs/svelte": "^7.0.0",
+    "@astrojs/vue": "^5.0.0",
+    "astro": "^5.4.2",
+    "preact": "^10.26.0",
     "prettier": "^3.1.0",
-    "preact": "^10.6.5",
-    "vue": "^3.2.30",
-    "sharp": "^0.32.5"
+    "sharp": "^0.32.5",
+    "solid-js": "^1.9.5",
+    "svelte": "^5.0.0",
+    "vue": "^3.2.30"
   }
 }

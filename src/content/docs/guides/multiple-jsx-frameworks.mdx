@@ -1,0 +1,53 @@
+---
+title: Multiple JSX Frameworks
+sidebar:
+  order: 7
+---
+Astro Live Code works by generating files out of the code blocks and naming them something like `AstroExample_XYZ.jsx`, where the extension is determined by the code block language.
+This will be an issue if you are using multiple JSX frameworks as Astro can't know which framework to use without changes to the filename.
+
+To solve this, you can manually specify the file extension with the `ext` meta attribute and use that to match against your 
+[Astro integrations](https://docs.astro.build/en/guides/integrations-guide/preact/#combining-multiple-jsx-frameworks).
+
+First, edit your `astro.config.mjs` to look something like this:
+
+```js title="astro.config.mjs"
+import { defineConfig } from 'astro/config';
+import preact from '@astrojs/preact';
+import react from '@astrojs/react';
+import solid from '@astrojs/solid-js';
+
+export default defineConfig({
+  integrations: [
+    preact({
+      include: ['**/*.preact.*'],
+    }),
+    react({
+      include: ['**/*.react.*'],
+    }),
+    solid({
+      include: ['**/*.solid.*'],
+    }),
+  ],
+});
+```
+
+Then specify the file extension on the codeblock
+
+````
+```jsx live ext="solid.jsx"
+...
+```
+````
+
+```jsx live ext="solid.jsx"
+import { For } from 'solid-js'
+
+export default () => {
+  const items = ['a', 'b', 'c']
+  return (
+    <For each={items}>{(item) => <span>{item}</span>}</For>
+  )
+}
+```
+
