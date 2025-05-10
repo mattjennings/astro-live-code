@@ -5,6 +5,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import svelte from '@astrojs/svelte'
 import preact from '@astrojs/preact'
+import solidJs from '@astrojs/solid-js'
 import vue from '@astrojs/vue'
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
@@ -41,7 +42,10 @@ export default defineConfig({
     }),
     liveCode({}),
     svelte(),
-    preact(),
+    solidJs({
+      include: ['**/solid/*', '**/*.solid.*'],
+    }),
+    preact({ exclude: ['**/solid/*', '**/*.solid.*'] }),
     vue(),
   ],
 })

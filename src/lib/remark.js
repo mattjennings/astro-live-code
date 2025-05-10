@@ -21,8 +21,9 @@ export default function examples(options) {
         const isDiff = node.lang === 'diff'
         const lang = getLang(node)
         const meta = node.meta
+        const parsedMeta = parseMeta(meta)
 
-        const src = isDiff
+        let src = isDiff
           ? node.value
               ?.split('\n')
               // filter out lines with leading -
@@ -42,22 +43,26 @@ export default function examples(options) {
         )
 
         const exampleComponentName = EXAMPLE_COMPONENT_PREFIX + i
+
+        const fileExt = (parsedMeta.ext || lang).replace(/^\.+/, '')
+
         const filename = toPOSIX(
-          `${parentId.replace(
-            path.extname(parentId),
-            '',
-          )}-${exampleComponentName}.${lang}`,
+          [
+            parentId.replace(path.extname(parentId), ''),
+            `${exampleComponentName}.${fileExt}`,
+          ].join('-'),
         )
 
-        const layout = toPOSIX(getLayoutPathFromMeta(meta) || options.layout)
+        const layout = toPOSIX(parsedMeta.layout || options.layout)
         const layoutName = layout === options.layout ? 'Example' : `Example${i}`
 
-        const wrapper = toPOSIX(getWrapperPathFromMeta(meta) || options.wrapper)
+        const wrapper = toPOSIX(parsedMeta.wrapper || options.wrapper)
         const wrapperFilename = wrapper
-          ? filename.replace(`.${lang}`, `.w.${lang}`)
+          ? filename.replace(`.${fileExt}`, `.w.${fileExt}`)
           : null
 
         examples.push({ filename, src })
+
         virtualFiles.set(filename, {
           src,
           parent: parentId,
@@ -361,11 +366,36 @@ function valueToEstreeExpression(value) {
   }
 }
 
+function parseMeta(meta) {
+  return meta.split(' ').reduce((acc, part) => {
+    let [key, value] = part.split('=')
+
+    if (value) {
+      if (
+        (value.startsWith('"') && value.endsWith('"')) ||
+        (value.startsWith("'") && value.endsWith("'"))
+      ) {
+        value = value.slice(1, -1)
+      } else if (value.startsWith('{') && value.endsWith('}')) {
+        value = JSON.parse(value)
+      } else if (value === 'true' || value === 'false') {
+        value = value === 'true'
+      }
+    } else {
+      value = true
+    }
+
+    acc[key] = value
+    return acc
+  }, {})
+}
+
 function getLang(node) {
   if (node.lang === 'diff') {
-    const lang = node.meta.split(' ').find((part) => part.startsWith('lang='))
+    const { lang } = parseMeta(node.meta)
+
     if (lang) {
-      return lang.split('=')[1].slice(1, -1)
+      return lang
     }
   }
 
@@ -393,24 +423,6 @@ function parsePropsFromString(string) {
   } else {
     // Return null if no match is found
     return null
-  }
-}
-
-function getLayoutPathFromMeta(meta) {
-  const part = meta.split(' ').find((part) => part.startsWith('layout='))
-
-  if (part) {
-    const layoutPath = part.split('=')[1]
-    return layoutPath.slice(1, layoutPath.length - 1)
-  }
-}
-
-function getWrapperPathFromMeta(meta) {
-  const part = meta.split(' ').find((part) => part.startsWith('wrapper='))
-
-  if (part) {
-    const wrapperPath = part.split('=')[1]
-    return wrapperPath.slice(1, wrapperPath.length - 1)
   }
 }
 
